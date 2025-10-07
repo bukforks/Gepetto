@@ -57,6 +57,11 @@ class GepettoCLI(ida_kernwin.cli_t):
         if not line.strip():  # Don't do anything for empty sends.
             return True
 
+        if line.strip() == "/clear":
+            del MESSAGES[1:]
+            print("Gepetto context cleared.")
+            return True
+
         MESSAGES.append({"role": "user", "content": line})
         if gepetto.config.auto_show_status_panel_enabled():
             STATUS_PANEL.ensure_shown()
@@ -85,7 +90,8 @@ class GepettoCLI(ida_kernwin.cli_t):
                     }
                 )
                 for tc in response.tool_calls:
-                    STATUS_PANEL.log(_("→ Model requested tool: {tool_name} ({tool_args}...)").format(
+                    STATUS_PANEL.log(_("→ Model requested tool: {tool_name} ({tool_args}...)"
+).format(
                         tool_name=tc.function.name,
                         tool_args=(tc.function.arguments or "")[:120],
                     ))

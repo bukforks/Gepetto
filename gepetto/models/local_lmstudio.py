@@ -99,6 +99,7 @@ class LMStudio(GPT):
             query,
             cb,
             additional_model_options=additional_model_options,
+            stream=True,
         )
 
 gepetto.models.model_manager.register_model(LMStudio)
